@@ -34,8 +34,8 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         def print_request(s):
                 print "GET", s.client_address[0], ":", s.client_address[1], " ", s.path, " "
-                pprint (vars(s.connection))
                 """
+                pprint (vars(s.connection))
                 pprint (vars(s.request))
                 pprint (vars(s))
                 pprint (vars(s.connection))
