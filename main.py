@@ -5,7 +5,7 @@ import BaseHTTPServer
 from pprint import pprint
 
 HOST_NAME = '0.0.0.0'
-PORT_NUMBER = os.environ['PORT'] 
+PORT_NUMBER = os.environ.get('PORT', 8000)
 
 
 class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
@@ -13,17 +13,17 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 s.send_response(200)
                 s.send_header("Content-type", "text/html")
                 s.end_headers()
-                s.print()
+                s.print_request()
 
         def do_GET(s):
-                s.handle("GET")
-                s.print()
+                s.handle_request("GET")
+                s.print_request()
         
         def do_POST(s):
-                s.handle("POST")
-                s.print()
+                s.handle_request("POST")
+                s.print_request()
 
-        def handle(s, method):
+        def handle_request(s, method):
                 s.send_response(200)
                 s.send_header("Content-type", "text/html")
                 s.end_headers()
@@ -32,8 +32,8 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 s.wfile.write("<p>%s: You accessed path: %s</p>" % method, s.path)
                 s.wfile.write("</body></html>")     
 
-        def print(s):
-                print "GET" s.client_address[0], ":", s.client_address[1], " ", s.path, " "
+        def print_request(s):
+                print "GET", s.client_address[0], ":", s.client_address[1], " ", s.path, " "
                 pprint (vars(s.connection))
                 """
                 pprint (vars(s.request))
