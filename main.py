@@ -27,27 +27,29 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 s.send_response(200)
                 s.send_header("Content-type", "text/html")
                 s.end_headers()
-                s.wfile.write("<html><head><title>Title</title></head>")
+        
+                s.wfile.write("<html><head>")
+                s.wfile.write(s.get_meta_tag(charset="UTF-8"))
+                s.wfile.write(s.get_meta_tag(content="Hello World!", property="og:title"))
+                s.wfile.write(s.get_meta_tag(content="Sample Site", property="og:site_name"))
+                s.wfile.write(s.get_meta_tag(content="Description", property="og:description"))
+                s.wfile.write(s.get_meta_tag(content="https://ngnx-.herokuapp.com/", property="og:url"))
+                s.wfile.write(s.get_meta_tag(content="https://s-media-cache-ak0.pinimg.com/originals/eb/4a/4d/eb4a4d61d98913135097fc05bf2b5435.jpg", property="og:image"))
+                s.wfile.write("<title>Title</title></head>")
+
                 s.wfile.write("<body><p>hello</p>")
                 s.wfile.write("<p>%s: You accessed path: %s</p>" % (method, s.path))
                 s.wfile.write("</body></html>")     
 
+        def get_meta_tag(s, **kwargs):
+                s = "<meta "
+                for key, value in kwargs.items():
+                        s += '{0}="{1}" '.format(key, value)
+                s += ">\n"
+                return s
+
         def print_request(s):
                 print "GET", s.client_address[0], ":", s.client_address[1], " ", s.path, " "
-                """
-                pprint (vars(s.connection))
-                pprint (vars(s.request))
-                pprint (vars(s))
-                pprint (vars(s.connection))
-                pprint (vars(s.headers))
-                pprint (vars(s.request))
-                pprint (vars(s.rfile))
-                pprint (vars(s.server))
-                pprint (vars(s.wfile))
-                pprint (vars(s.fp))
-
-                pprint (vars(s.request))
-                """
 
 
 if __name__ == '__main__':
