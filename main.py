@@ -5,7 +5,7 @@ import BaseHTTPServer
 from pprint import pprint
 
 HOST_NAME = '0.0.0.0'
-PORT_NUMBER = os.environ.get('PORT', 8000)
+PORT_NUMBER = int(os.environ.get('PORT', "8000"))
 
 
 class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
