@@ -29,7 +29,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 s.end_headers()
                 s.wfile.write("<html><head><title>Title</title></head>")
                 s.wfile.write("<body><p>hello</p>")
-                s.wfile.write("<p>%s: You accessed path: %s</p>" % method, s.path)
+                s.wfile.write("<p>%s: You accessed path: %s</p>" % (method, s.path))
                 s.wfile.write("</body></html>")     
 
         def print_request(s):
